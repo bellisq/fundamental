@@ -14,7 +14,8 @@
         "strictphp/property": "^1.3",
         "vlucas/phpdotenv": "^2.4",
         "bellisq/type-map": "^2.0@beta",
-        "psr/log": "^1.0"
+        "psr/log": "^1.0",
+        "monolog/monolog": "^1.23"
     },
     "autoload": {
         "psr-4": {
