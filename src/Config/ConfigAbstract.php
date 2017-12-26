@@ -2,6 +2,7 @@
 
 namespace Bellisq\Fundamental\Config;
 
+use Bellisq\Fundamental\Exceptions\MissingConfigException;
 use Strict\Property\Utility\ReadonlyPropertyContainer;
 
 
@@ -16,10 +17,21 @@ use Strict\Property\Utility\ReadonlyPropertyContainer;
 abstract class ConfigAbstract
     extends ReadonlyPropertyContainer
 {
+    /** @var array */
+    private $env;
+
     final public function __construct(array $env)
     {
+        $this->env = $env;
         $this->initialize($env);
     }
 
     abstract protected function initialize(array $env);
+
+    protected function existOrFail(string $key): void
+    {
+        if (!isset($this->env[$key])) {
+            throw new MissingConfigException($key, static::class);
+        }
+    }
 }
