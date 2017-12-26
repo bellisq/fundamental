@@ -13,7 +13,7 @@ class ZZZConfigProviderTest
 {
     public function testBehavior()
     {
-        $cp = new ZZZConfigProvider(new RootDirectory(__DIR__ . '/../../Mocks/Config'));
+        $cp = new ZZZConfigProvider(new RootDirectory(__DIR__ . '/../../Envs/ConfigProviderTest'));
         $cf = $cp->get(ZZZDerivedConfig::class);
         $this->assertEquals(29, $cf->testValue);
     }
