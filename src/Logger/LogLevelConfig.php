@@ -1,6 +1,6 @@
 <?php
 
-namespace Bellisq\Fundamental\Config\Standard;
+namespace Bellisq\Fundamental\Logger;
 
 use Bellisq\Fundamental\Config\ConfigAbstract;
 use Bellisq\Fundamental\Exceptions\InvalidConfigException;
@@ -8,7 +8,7 @@ use Psr\Log\LogLevel;
 
 
 /**
- * [Class] Debug Config
+ * [Class] Log-Level Config
  *
  * @author Showsay You <akizuki.c10.l65@gmail.com>
  * @copyright 2017 Bellisq. All Rights Reserved.
@@ -16,26 +16,17 @@ use Psr\Log\LogLevel;
  * @since 1.0.0
  *
  * @property-read string $logLevel
- * @property-read bool $debugMode
- * @property-read bool $maintenanceMode
  */
-class DebugConfig
+class LogLevelConfig
     extends ConfigAbstract
 {
-    private const ENV_LOG_LEVEL = 'DEBUG_LOG_LEVEL';
-    private const ENV_DEBUG_MODE = 'DEBUG_DEBUG_MODE';
-    private const ENV_MAINTENANCE_MODE = 'DEBUG_MAINTENANCE_MODE';
+    private const ENV_LOG_LEVEL = 'LOG_LEVEL';
 
     public const DEF_LOG_LEVEL = LogLevel::NOTICE;
 
     protected function initialize(array $env)
     {
         $this->setReadonlyProperty('logLevel', $this->getLogLevel($env));
-
-        $this->setReadonlyProperty('debugMode',
-            $this->getBool(self::ENV_DEBUG_MODE, false));
-        $this->setReadonlyProperty('maintenanceMode',
-            $this->getBool(self::ENV_MAINTENANCE_MODE, false));
     }
 
     private function getLogLevel(array $env): string
@@ -47,13 +38,13 @@ class DebugConfig
         $t = strtolower(trim($env[self::ENV_LOG_LEVEL]));
         $allowed = [
             LogLevel::EMERGENCY => true,
-            LogLevel::ALERT => true,
-            LogLevel::CRITICAL => true,
-            LogLevel::ERROR => true,
-            LogLevel::WARNING => true,
-            LogLevel::NOTICE => true,
-            LogLevel::INFO => true,
-            LogLevel::DEBUG => true,
+            LogLevel::ALERT     => true,
+            LogLevel::CRITICAL  => true,
+            LogLevel::ERROR     => true,
+            LogLevel::WARNING   => true,
+            LogLevel::NOTICE    => true,
+            LogLevel::INFO      => true,
+            LogLevel::DEBUG     => true,
         ];
 
         if (isset($allowed[$t])) {

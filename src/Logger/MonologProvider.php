@@ -2,7 +2,7 @@
 
 namespace Bellisq\Fundamental\Logger;
 
-use Bellisq\Fundamental\Config\Standard\DebugConfig;
+use Bellisq\Fundamental\Logger\LogLevelConfig;
 use Bellisq\Fundamental\Directory\LogDirectory;
 use Bellisq\TypeMap\DI\Provider;
 use Bellisq\TypeMap\DI\Transport\TypeRegister;
@@ -28,18 +28,14 @@ class MonologProvider
     /** @var string */
     private $logDir;
 
-    /** @var bool */
-    private $isDebug;
-
     /** @var string */
     private $logLevel;
 
-    public function __construct(LogDirectory $logDirectory, DebugConfig $debugConfig)
+    public function __construct(LogDirectory $logDirectory, LogLevelConfig $debugConfig)
     {
         parent::__construct();
 
         $this->logDir = $logDirectory->get();
-        $this->isDebug = $debugConfig->debugMode;
         $this->logLevel = $debugConfig->logLevel;
     }
 
@@ -52,16 +48,14 @@ class MonologProvider
     protected function instantiateObject(string $type): object
     {
         $logger = new Logger('BellisqLogger@' . self::makeRandStr());
-        if ($this->isDebug) {
-            $handler = new RotatingFileHandler($this->logDir . '/monolog.log', 0, LogLevel::DEBUG);
-        } else {
-            $handler = new FingersCrossedHandler(
-                new RotatingFileHandler($this->logDir . '/monolog.log', 0, LogLevel::INFO),
-                new ErrorLevelActivationStrategy(
-                    $this->logLevel)
-            );
-        }
+
+        $handler = new FingersCrossedHandler(
+            new RotatingFileHandler($this->logDir . '/monolog.log', 0, LogLevel::INFO),
+            new ErrorLevelActivationStrategy(
+                $this->logLevel)
+        );
         $logger->pushHandler($handler);
+
         return $logger;
     }
 

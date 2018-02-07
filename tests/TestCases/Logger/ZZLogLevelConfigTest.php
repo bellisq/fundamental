@@ -1,20 +1,20 @@
 <?php
 
-namespace Bellisq\Fundamental\Tests\TestCases\Config\Standard;
+namespace Bellisq\Fundamental\Tests\TestCases\Logger;
 
-use Bellisq\Fundamental\Config\Standard\DebugConfig;
+use Bellisq\Fundamental\Logger\LogLevelConfig;
 use Bellisq\Fundamental\Exceptions\InvalidConfigException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
 
-class DebugConfigTest
+class ZZLogLevelConfigTest
     extends TestCase
 {
     private function evalLogLevel(string $value, string $expected)
     {
-        $dc = new DebugConfig([
-            'DEBUG_LOG_LEVEL' => $value
+        $dc = new LogLevelConfig([
+            'LOG_LEVEL' => $value
         ]);
 
         $this->assertEquals($expected, $dc->logLevel);

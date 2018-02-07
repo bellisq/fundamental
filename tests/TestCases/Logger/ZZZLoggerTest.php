@@ -2,9 +2,10 @@
 
 namespace Bellisq\Fundamental\Tests\TestCases\Logger;
 
-use Bellisq\Fundamental\Config\Standard\DebugConfig;
+use Bellisq\Fundamental\Logger\LogLevelConfig;
 use Bellisq\Fundamental\Directory\LogDirectory;
 use Bellisq\Fundamental\Logger\MonologProvider;
+use Bellisq\TypeMap\TypeMapInterface;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -16,9 +17,9 @@ class ZZZLoggerTest
 {
     public function testBehavior()
     {
-        $p = new MonologProvider(new LogDirectory(__DIR__ . '/../../Logs'), new DebugConfig([
-            'DEBUG_LOG_LEVEL' => LogLevel::EMERGENCY,
-            'DEBUG_DEBUG_MODE' => 'true',
+        /** @var TypeMapInterface $p */
+        $p = new MonologProvider(new LogDirectory(__DIR__ . '/../../Logs'), new LogLevelConfig([
+            'LOG_LEVEL' => LogLevel::EMERGENCY,
         ]));
 
         /** @var LoggerInterface $logger */
