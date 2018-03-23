@@ -15,6 +15,8 @@ use Bellisq\Fundamental\Exceptions\VirtualClassConflictionException;
  * @copyright 2017 Bellisq. All Rights Reserved.
  * @package bellisq/fundamental
  * @since 1.0.0
+ *
+ * @internal
  */
 class ConfigDefinition
 {
